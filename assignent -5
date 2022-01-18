@@ -1,0 +1,256 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct abc 
+{
+int roll;
+int prn;
+char name[20];
+struct abc *next,*prev;
+};
+  struct abc *head;
+struct abc* create(struct abc *head)
+{
+  struct abc *p=head;
+  int n;
+  printf("\nEnter number of members:\n");
+  scanf("%d",&n);
+   printf("Enter details of first node:\n");
+  printf("Roll no\n");
+  scanf("%d",&head->roll);
+    printf("PRN\n");
+   scanf("%d",&head->prn);
+     printf("Name\n");
+   scanf("%s",head->name);
+   head->next=NULL;
+   head->prev=NULL;
+ for(int i=1;i<n;i++)
+  { 
+    struct abc *temp =(struct abc*)malloc(sizeof(struct abc));
+    p->next=temp;
+    temp->prev=p;
+    printf("\nEnter deatils of node:");
+  printf("\nRoll no\n");
+  scanf("%d",&temp->roll);
+    printf("PRN\n");
+   scanf("%d",&temp->prn);
+     printf("Name\n");
+   scanf("%s",temp->name);
+   temp->next=NULL;
+  
+    p=p->next;
+  }
+  return head;
+}
+
+void display(struct abc *head)
+{
+  struct abc *p=head;
+  printf("\nROLL   PRN NAME\n");
+  while(p!=NULL)
+  {
+    printf("%d\t\t%d\t%s\n",p->roll,p->prn,p->name);
+    p=p->next;
+  }
+}
+struct abc* in_s(struct abc *head)
+{
+struct abc *temp =(struct abc*)malloc(sizeof(struct abc));
+    head->prev=temp;
+    temp->prev=NULL;
+    temp->next=head;
+    printf("\nEnter deatils of node:");
+  printf("\nRoll no\n");
+  scanf("%d",&temp->roll);
+    printf("PRN\n");
+   scanf("%d",&temp->prn);
+     printf("Name\n");
+   scanf("%s",temp->name);
+  
+  return temp;
+}
+void in_m(struct abc *head)
+{
+  int pr;
+  printf("\nInsert node after node with prn:\n");
+  scanf("%d",&pr);
+  struct abc *p=(struct abc*)malloc(sizeof(struct abc));
+  p=head;
+  struct abc *q=(struct abc*)malloc(sizeof(struct abc));
+  q=head->next;
+    while(p->prn!=pr)
+    {
+    p=p->next;
+    q=q->next;
+    }
+    
+struct abc *temp =(struct abc*)malloc(sizeof(struct abc));
+     p->next=temp;
+   printf("\nEnter details of node:");
+   printf("\nRoll no\n");
+   scanf("%d",&temp->roll);
+   printf("PRN\n");
+   scanf("%d",&temp->prn);
+   printf("Name\n");
+   scanf("%s",temp->name);
+   temp->next=q;
+   temp->prev=p;
+   q->prev=temp;
+}
+void in_e(struct abc *head)
+{
+  struct abc *temp =(struct abc*)malloc(sizeof(struct abc));
+     struct abc *p= head;
+     while(p->next!=NULL)
+     {
+         p=p->next;
+     }
+    p->next=temp; 
+   printf("\nEnter details of node:");
+   printf("\nRoll no\n");
+   scanf("%d",&temp->roll);
+   printf("PRN\n");
+   scanf("%d",&temp->prn);
+   printf("Name\n");
+   scanf("%s",temp->name);
+ temp->prev=p;
+ temp->next=NULL;
+}
+struct abc* insert(struct abc *head)
+{
+  int c;
+  printf("\nInsert NODE at:\n1)START\n2)Middle\n3)End\n");
+  scanf("%d",&c);
+  switch(c)
+  {
+     case 1:
+     head = in_s(head);
+     break;
+     case 2:
+            in_m(head);
+     break;
+     case 3:
+            in_e(head);
+     break;
+
+  }
+  return head;
+}
+struct abc * del_s(struct abc *head)
+{
+    head=head->next;
+    head->prev=NULL;
+    return head;
+}
+void del_m(struct abc *head)
+{     int pr;
+    printf("\nEnter prn num of the node to be deleted:\n");
+    scanf("%d",&pr);
+    struct abc *p=head;
+    while(p->prn!=pr)
+    {
+        p=p->next;
+    } 
+    struct abc *q= p->next;
+    struct abc *r= p->prev;
+    q->prev=p->prev;
+     r->next=q;
+     free(p);
+}
+void del_e(struct abc *head)
+{     
+   struct abc *p= head;
+     while(p->next!=NULL)
+     {
+         p=p->next;
+     }
+     struct abc *q=p->prev;
+     q->next=NULL;
+     free(p);
+
+}
+struct abc * del(struct abc *head)
+{
+  int c;
+  printf("\nDELETE NODE at:\n1)START\n2)Middle\n3)End\n");
+  scanf("%d",&c);
+  switch(c)
+  {
+     case 1:
+     head = del_s(head);
+     break;
+     case 2:
+            del_m(head);
+     break;
+     case 3:
+    del_e(head);
+     break;
+
+  }
+  return head;  
+}
+void mod(struct abc *head)
+{
+  int x;
+  printf("\nModify record with roll no:\n");
+  scanf("%d",&x);
+  struct abc *p=head;
+  while(p->roll!=x)
+  {
+    p=p->next;
+  }
+  printf("Enter new roll no:\n");
+  scanf("%d",&p->roll);
+  printf("Enter new name:\n");
+  scanf("%s",p->name);
+  printf("Enter new prn:\n");
+  scanf("%d",&p->prn);
+}
+struct abc* reverse(struct abc *head)
+{
+  struct abc *ptr1=head;
+  struct abc *ptr2=head->next;
+   ptr1->next=NULL;
+   ptr1->prev=ptr2;
+   while(ptr2!=NULL)
+   {
+     ptr2->prev=ptr2->next;
+     ptr2->next=ptr1;
+     ptr1=ptr2;
+     ptr2=ptr2->prev;
+   }
+   head=ptr1;
+   return head;
+}
+int main(void) {
+  int i,j,k,c;
+head=( struct abc *)malloc(sizeof(struct abc ));
+ 
+do
+{
+  printf("\n1)Enter details\n2)Insert a record\n3)delete a record\n4)modify a record\n5)display\n6)Display list backward\n");
+  scanf("%d",&c);
+switch(c)
+{
+  case 1:
+   head= create(head);
+    break;
+  case 2:
+    head= insert(head);
+     break;
+    case 3:
+       head=del(head);
+       break;
+       case 4:
+     mod(head);
+     break;
+    
+  case 5:
+      display(head);
+      break;
+      case 6:
+        head=reverse(head);
+        break;
+}
+}while(c!=0);
+  return 0;
+}
